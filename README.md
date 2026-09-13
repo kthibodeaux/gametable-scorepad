@@ -34,6 +34,16 @@ Arduino dependency, so it's tested on the host machine instead of on device:
 `ButtonReader` and `Display` are the only two files that touch GPIO/I2C
 directly; they're verified manually on real hardware instead.
 
+## Scorepad identity (scorepadColor)
+
+Each scorepad persists a single string, `scorepadColor`, in flash (via the
+ESP32 `Preferences`/NVS storage) so it survives reboots and reflashes. On
+first boot it defaults to `"unassigned"`.
+
+To set it, hold down buttons 0 and 7 while powering on the device. The LCD
+shows "Serial Mode"; send a line of text over Serial (115200 baud) and it's
+saved as the new color.
+
 ## Adding a new game
 
 1. Create `src/games/YourGame.h` / `.cpp` implementing the `Game` interface:

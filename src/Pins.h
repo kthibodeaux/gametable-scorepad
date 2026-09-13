@@ -11,3 +11,8 @@ constexpr uint8_t kLcdCols = 16;
 constexpr uint8_t kLcdRows = 2;
 
 constexpr unsigned long kDebounceMs = 50;
+
+// Holding both of these buttons down at boot enters serial provisioning
+// mode, letting scorepadColor be set over Serial.
+constexpr uint8_t kSerialModeButtonIndexA = 0;
+constexpr uint8_t kSerialModeButtonIndexB = 7;
