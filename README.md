@@ -36,7 +36,7 @@ directly; they're verified manually on real hardware instead.
 
 ## Adding a new game
 
-1. Create `src/YourGame.h` / `.cpp` implementing the `Game` interface:
+1. Create `src/games/YourGame.h` / `.cpp` implementing the `Game` interface:
    `name()`, `onStart()`, `onButtonPress()`, `render()`.
 2. Add unit tests in `test/test_your_game.cpp` using `FakeDisplay` and
    `FakeEventSink`, and register them in `test/main.cpp` and

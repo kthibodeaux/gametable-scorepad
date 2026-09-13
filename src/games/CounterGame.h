@@ -1,6 +1,6 @@
 #pragma once
-#include "Game.h"
-#include "EventSink.h"
+#include "../Game.h"
+#include "../EventSink.h"
 
 class CounterGame : public Game {
 public:

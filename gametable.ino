@@ -1,5 +1,5 @@
 #include "src/GameManager.h"
-#include "src/CounterGame.h"
+#include "src/games/CounterGame.h"
 #include "src/NullEventSink.h"
 #include "src/ButtonReader.h"
 #include "src/Display.h"

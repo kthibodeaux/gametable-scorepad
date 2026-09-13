@@ -1,7 +1,7 @@
 #include "test_harness.h"
 #include "fakes/FakeDisplay.h"
 #include "fakes/FakeEventSink.h"
-#include "../src/CounterGame.h"
+#include "../src/games/CounterGame.h"
 #include "../src/GameManager.h"
 
 int test_game_manager() {

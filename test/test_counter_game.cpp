@@ -1,7 +1,7 @@
 #include "test_harness.h"
 #include "fakes/FakeEventSink.h"
 #include "fakes/FakeDisplay.h"
-#include "../src/CounterGame.h"
+#include "../src/games/CounterGame.h"
 
 int test_counter_game() {
   g_testFailures = 0;
