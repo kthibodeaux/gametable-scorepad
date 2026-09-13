@@ -40,9 +40,20 @@ Each scorepad persists a single string, `scorepadColor`, in flash (via the
 ESP32 `Preferences`/NVS storage) so it survives reboots and reflashes. On
 first boot it defaults to `"unassigned"`.
 
-To set it, hold down buttons 0 and 7 while powering on the device. The LCD
-shows "Serial Mode"; send a line of text over Serial (115200 baud) and it's
-saved as the new color.
+To view or change it, hold down buttons 6 and 7 while powering on the
+device. The LCD shows "Serial Mode"; over Serial (115200 baud) you get a
+menu:
+
+```
+=== Scorepad Provisioning ===
+1. Show color
+2. Set color
+Choice:
+```
+
+Choosing "2" prompts for a new value and saves it immediately. This mode
+runs until the device is reset — there's no path back to normal boot from
+here, matching the rest of the platform's power-cycle-to-exit model.
 
 ## Adding a new game
 

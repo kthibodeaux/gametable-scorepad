@@ -13,6 +13,9 @@ constexpr uint8_t kLcdRows = 2;
 constexpr unsigned long kDebounceMs = 50;
 
 // Holding both of these buttons down at boot enters serial provisioning
-// mode, letting scorepadColor be set over Serial.
-constexpr uint8_t kSerialModeButtonIndexA = 0;
+// mode, letting scorepadColor be set over Serial. Must not be button
+// index 0 -- its pin (GPIO0) is the ESP32-S3's own BOOT strapping pin,
+// and holding it low at reset forces the chip into its ROM download
+// mode before any of this firmware runs.
+constexpr uint8_t kSerialModeButtonIndexA = 6;
 constexpr uint8_t kSerialModeButtonIndexB = 7;

@@ -9,5 +9,7 @@ g++ -std=c++17 -Wall -Wextra -I ../src -o /tmp/gametable_tests \
   test_game_manager.cpp \
   ../src/GameManager.cpp \
   test_scorepad_config.cpp \
-  ../src/ScorepadConfig.cpp
+  ../src/ScorepadConfig.cpp \
+  test_provisioning_menu.cpp \
+  ../src/ProvisioningMenu.cpp
 /tmp/gametable_tests

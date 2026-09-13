@@ -5,6 +5,7 @@ int test_smoke();
 int test_counter_game();
 int test_game_manager();
 int test_scorepad_config();
+int test_provisioning_menu();
 
 int main() {
   int failures = 0;
@@ -12,6 +13,7 @@ int main() {
   failures += test_counter_game();
   failures += test_game_manager();
   failures += test_scorepad_config();
+  failures += test_provisioning_menu();
   if (failures == 0) {
     std::printf("All tests passed.\n");
   } else {

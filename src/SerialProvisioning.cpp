@@ -1,5 +1,6 @@
 #include "SerialProvisioning.h"
 #include "Pins.h"
+#include "ProvisioningMenu.h"
 #include <Arduino.h>
 
 namespace {
@@ -22,6 +23,14 @@ size_t readSerialLine(char* buffer, size_t bufferSize) {
   return len;
 }
 
+void printMenu() {
+  Serial.println();
+  Serial.println("=== Scorepad Provisioning ===");
+  Serial.println("1. Show color");
+  Serial.println("2. Set color");
+  Serial.print("Choice: ");
+}
+
 }  // namespace
 
 bool SerialProvisioning::runIfRequested(ScorepadConfig& config, IDisplay& display) {
@@ -32,18 +41,35 @@ bool SerialProvisioning::runIfRequested(ScorepadConfig& config, IDisplay& displa
   }
 
   display.printLine(0, "Serial Mode");
-  display.printLine(1, "Send color...");
-  Serial.println("Serial provisioning mode. Send a color and press enter.");
+  display.printLine(1, "See Serial");
 
-  char buffer[ScorepadConfig::kColorBufferSize];
-  readSerialLine(buffer, sizeof(buffer));
-  config.setColor(buffer);
+  char line[ScorepadConfig::kColorBufferSize];
+  while (true) {
+    printMenu();
+    readSerialLine(line, sizeof(line));
 
-  display.printLine(0, "Saved:");
-  display.printLine(1, buffer);
-  Serial.print("Saved color: ");
-  Serial.println(buffer);
-  delay(1500);
+    switch (parseMenuChoice(line)) {
+      case MenuChoice::ShowColor:
+        Serial.print("Current color: ");
+        Serial.println(config.color());
+        break;
 
-  return true;
+      case MenuChoice::SetColor: {
+        Serial.print("Enter new color: ");
+        char newColor[ScorepadConfig::kColorBufferSize];
+        readSerialLine(newColor, sizeof(newColor));
+        config.setColor(newColor);
+        display.printLine(0, "Saved:");
+        display.printLine(1, newColor);
+        Serial.print("Saved color: ");
+        Serial.println(newColor);
+        break;
+      }
+
+      case MenuChoice::Invalid:
+      default:
+        Serial.println("Invalid choice.");
+        break;
+    }
+  }
 }
