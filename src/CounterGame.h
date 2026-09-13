@@ -13,7 +13,7 @@ public:
 
 private:
   EventSink& eventSink_;
-  long score_ = 0;
-  long lastIncrement_ = 0;
+  int score_ = 0;
+  int lastIncrement_ = 0;
   bool hasIncremented_ = false;
 };

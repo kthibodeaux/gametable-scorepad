@@ -13,7 +13,7 @@ void CounterGame::onStart() {
 }
 
 bool CounterGame::onButtonPress(uint8_t buttonIndex) {
-  long increment = static_cast<long>(buttonIndex) + 1;
+  int increment = static_cast<int>(buttonIndex) + 1;
   score_ += increment;
   lastIncrement_ = increment;
   hasIncremented_ = true;
@@ -24,12 +24,12 @@ bool CounterGame::onButtonPress(uint8_t buttonIndex) {
 void CounterGame::render(IDisplay& display) {
   if (hasIncremented_) {
     char message[32];
-    std::snprintf(message, sizeof(message), "Incremented by %ld!", lastIncrement_);
+    std::snprintf(message, sizeof(message), "Incremented by %d!", lastIncrement_);
     display.printLine(0, message);
   } else {
     display.printLine(0, "");
   }
   char line[32];
-  std::snprintf(line, sizeof(line), "Score: %ld", score_);
+  std::snprintf(line, sizeof(line), "Score: %d", score_);
   display.printLine(1, line);
 }

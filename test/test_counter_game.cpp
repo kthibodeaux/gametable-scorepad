@@ -9,7 +9,7 @@ int test_counter_game() {
   FakeEventSink sink;
   CounterGame game(sink);
   game.onStart();
-  ASSERT_EQ(0L, sink.lastValue);
+  ASSERT_EQ(0, sink.lastValue);
 
   FakeDisplay display;
   game.render(display);
@@ -17,13 +17,13 @@ int test_counter_game() {
   ASSERT_STREQ("Score: 0", display.line1.c_str());
 
   ASSERT_TRUE(game.onButtonPress(0));
-  ASSERT_EQ(1L, sink.lastValue);
+  ASSERT_EQ(1, sink.lastValue);
 
   ASSERT_TRUE(game.onButtonPress(2));
-  ASSERT_EQ(4L, sink.lastValue);
+  ASSERT_EQ(4, sink.lastValue);
 
   ASSERT_TRUE(game.onButtonPress(7));
-  ASSERT_EQ(12L, sink.lastValue);
+  ASSERT_EQ(12, sink.lastValue);
 
   game.render(display);
   ASSERT_STREQ("Incremented by 8!", display.line0.c_str());
