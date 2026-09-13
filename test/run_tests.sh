@@ -7,5 +7,7 @@ g++ -std=c++17 -Wall -Wextra -I ../src -o /tmp/gametable_tests \
   test_counter_game.cpp \
   ../src/games/CounterGame.cpp \
   test_game_manager.cpp \
-  ../src/GameManager.cpp
+  ../src/GameManager.cpp \
+  test_scorepad_config.cpp \
+  ../src/ScorepadConfig.cpp
 /tmp/gametable_tests
