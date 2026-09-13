@@ -1,33 +1,29 @@
-#include <Wire.h>
-#include <LiquidCrystal_I2C.h>
+#include "src/GameManager.h"
+#include "src/CounterGame.h"
+#include "src/NullEventSink.h"
+#include "src/ButtonReader.h"
+#include "src/Display.h"
 
-LiquidCrystal_I2C lcd(0x27, 16, 2);
+NullEventSink eventSink;
+CounterGame counterGame(eventSink);
+Game* games[] = {&counterGame};
+
+GameManager gameManager(games, 1);
+ButtonReader buttonReader;
+Display display;
 
 void setup() {
   Serial.begin(115200);
-
-  Wire.begin();
-  lcd.init();
-  lcd.backlight();
-
-  lcd.setCursor(0, 0);
-  lcd.print("  Hello World!  ");
-  lcd.setCursor(0, 1);
-  lcd.print("Count: ");
-
-  Serial.println("LCD init done");
+  buttonReader.begin();
+  display.begin();
+  gameManager.render(display);
 }
 
 void loop() {
-  static unsigned long count = 0;
-
-  lcd.setCursor(7, 1);
-  lcd.print(count);
-  lcd.print("   ");
-
-  Serial.print("Count: ");
-  Serial.println(count);
-
-  count++;
-  delay(1000);
+  uint8_t pressedIndex;
+  if (buttonReader.poll(pressedIndex)) {
+    if (gameManager.handleButtonPress(pressedIndex)) {
+      gameManager.render(display);
+    }
+  }
 }
