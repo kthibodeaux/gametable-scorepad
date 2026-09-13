@@ -4,7 +4,7 @@
 
 class CounterGame : public Game {
 public:
-  explicit CounterGame(EventSink& eventSink);
+  CounterGame(EventSink& eventSink, const char* scorepadColor);
 
   const char* name() const override;
   void onStart() override;
@@ -13,6 +13,7 @@ public:
 
 private:
   EventSink& eventSink_;
+  const char* scorepadColor_;
   int score_ = 0;
   int lastIncrement_ = 0;
   bool hasIncremented_ = false;

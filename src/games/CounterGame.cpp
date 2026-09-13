@@ -1,7 +1,8 @@
 #include "CounterGame.h"
 #include <cstdio>
 
-CounterGame::CounterGame(EventSink& eventSink) : eventSink_(eventSink) {}
+CounterGame::CounterGame(EventSink& eventSink, const char* scorepadColor)
+    : eventSink_(eventSink), scorepadColor_(scorepadColor) {}
 
 const char* CounterGame::name() const { return "Counter"; }
 
@@ -27,7 +28,9 @@ void CounterGame::render(IDisplay& display) {
     std::snprintf(message, sizeof(message), "Incremented by %d!", lastIncrement_);
     display.printLine(0, message);
   } else {
-    display.printLine(0, "");
+    char message[32];
+    std::snprintf(message, sizeof(message), "Color: %s", scorepadColor_);
+    display.printLine(0, message);
   }
   char line[32];
   std::snprintf(line, sizeof(line), "Score: %d", score_);
