@@ -33,9 +33,9 @@ void printMenu() {
 
 }  // namespace
 
-bool SerialProvisioning::runIfRequested(ScorepadConfig& config, IDisplay& display) {
-  bool triggered = digitalRead(kButtonPins[kSerialModeButtonIndexA]) == LOW &&
-                   digitalRead(kButtonPins[kSerialModeButtonIndexB]) == LOW;
+bool SerialProvisioning::runIfRequested(ButtonReader& buttons, ScorepadConfig& config, IDisplay& display) {
+  bool triggered = buttons.isPressedNow(kSerialModeButtonIndexA) &&
+                   buttons.isPressedNow(kSerialModeButtonIndexB);
   if (!triggered) {
     return false;
   }

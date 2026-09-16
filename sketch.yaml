@@ -1,6 +1,8 @@
-default_fqbn: esp32:esp32:esp32s3:PSRAM=opi
+default_fqbn: esp32:esp32:esp32c3:CDCOnBoot=cdc
 default_port: /dev/ttyACM0
 baud_rate: 115200
 libraries:
   - name: LiquidCrystal I2C
     version: 1.1.2
+  - name: PCF8575
+    version: 0.2.4

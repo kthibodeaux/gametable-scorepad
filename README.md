@@ -1,22 +1,31 @@
 # Gametable Scorepad
 
-Firmware for the gametable's scorepads: battery-powered ESP32-S3 devices,
-each with a 16x2 I2C LCD and 8 direct-GPIO buttons, used to keep score for
-tabletop games. Each scorepad runs standalone — there's no communication
-between pads.
+Firmware for the gametable's scorepads: battery-powered ESP32-C3 Super Mini
+devices, each with a 16x2 I2C LCD and 8 buttons behind a PCF8575 IO
+expander, used to keep score for tabletop games. Each scorepad runs
+standalone — there's no communication between pads.
 
 ## Hardware
 
-- ESP32-S3 (built with `esp32:esp32:esp32s3:PSRAM=opi`)
-- 16x2 I2C LCD (`LiquidCrystal_I2C`)
-- 8 buttons, wired active-low with internal pull-ups to the GPIO pins listed
-  in `src/Pins.h`
+- ESP32-C3 Super Mini (built with `esp32:esp32:esp32c3:CDCOnBoot=cdc` --
+  CDC-on-boot is required for Serial to show up over the board's native
+  USB port)
+- 16x2 I2C LCD (`LiquidCrystal_I2C`), address `0x27`
+- PCF8575 16-channel I2C IO expander (`PCF8575` by Rob Tillaart), address
+  `0x20`
+- 8 buttons, wired active-low (expander's weak pull-ups) to the expander
+  channels listed in `src/Pins.h`
+- I2C bus (LCD + expander) on GPIO4 (SDA) / GPIO5 (SCL). GPIO8/GPIO9, the
+  core's I2C defaults, are avoided: both are strapping pins, and GPIO8 also
+  drives the onboard status LED.
+- Adafruit MAX17048 LiPoly fuel gauge, address `0x36` (shares the same I2C
+  bus; no extra GPIO needed unless the `ALRT` interrupt pin is wired up)
 
 ## Build and flash
 
 ```
-arduino-cli compile --fqbn esp32:esp32:esp32s3:PSRAM=opi .
-arduino-cli upload --fqbn esp32:esp32:esp32s3:PSRAM=opi -p /dev/ttyACM0 .
+arduino-cli compile --fqbn esp32:esp32:esp32c3:CDCOnBoot=cdc .
+arduino-cli upload --fqbn esp32:esp32:esp32c3:CDCOnBoot=cdc -p /dev/ttyACM0 .
 ```
 
 `sketch.yaml` pins the board FQBN, port, baud rate, and library versions used

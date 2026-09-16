@@ -1,16 +1,14 @@
 #include "ButtonReader.h"
-#include <Arduino.h>
 
 void ButtonReader::begin() {
-  for (uint8_t i = 0; i < kButtonCount; i++) {
-    pinMode(kButtonPins[i], INPUT_PULLUP);
-  }
+  expander_.begin();
 }
 
 bool ButtonReader::poll(uint8_t& pressedIndex) {
   unsigned long now = millis();
+  uint16_t state = expander_.readButton16();
   for (uint8_t i = 0; i < kButtonCount; i++) {
-    bool pressedNow = digitalRead(kButtonPins[i]) == LOW;
+    bool pressedNow = (state & (1u << kButtonPins[i])) == 0;
     if (pressedNow != lastRawPressed_[i]) {
       lastRawPressed_[i] = pressedNow;
       lastChangeMs_[i] = now;
@@ -24,4 +22,8 @@ bool ButtonReader::poll(uint8_t& pressedIndex) {
     }
   }
   return false;
+}
+
+bool ButtonReader::isPressedNow(uint8_t buttonIndex) {
+  return expander_.readButton(kButtonPins[buttonIndex]) == 0;
 }

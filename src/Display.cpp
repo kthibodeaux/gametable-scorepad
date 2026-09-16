@@ -1,9 +1,9 @@
 #include "Display.h"
-#include <Wire.h>
 #include <cstring>
 
+// Wire.begin() is called once, centrally, in gametable.ino's setup() --
+// the LCD and the PCF8575 button expander share one I2C bus.
 void Display::begin() {
-  Wire.begin();
   lcd_.init();
   lcd_.backlight();
 }

@@ -6,6 +6,8 @@
 #include "src/Storage.h"
 #include "src/ScorepadConfig.h"
 #include "src/SerialProvisioning.h"
+#include "src/Pins.h"
+#include <Wire.h>
 #include <cstring>
 
 char scorepadColor[ScorepadConfig::kColorBufferSize];
@@ -23,12 +25,13 @@ SerialProvisioning serialProvisioning;
 
 void setup() {
   Serial.begin(115200);
+  Wire.begin(kSdaPin, kSclPin);
   buttonReader.begin();
   display.begin();
   storage.begin();
   scorepadConfig.loadOrInitialize();
 
-  serialProvisioning.runIfRequested(scorepadConfig, display);
+  serialProvisioning.runIfRequested(buttonReader, scorepadConfig, display);
 
   strncpy(scorepadColor, scorepadConfig.color(), sizeof(scorepadColor) - 1);
   scorepadColor[sizeof(scorepadColor) - 1] = '\0';
